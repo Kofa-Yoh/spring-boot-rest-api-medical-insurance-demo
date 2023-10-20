@@ -72,11 +72,11 @@ public class PersonController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Person list with chosen text in lastname, firstname or secondname"),
             @ApiResponse(responseCode = "404", description = "No persons found")})
-    @GetMapping("/persons-by-names-start-text")
+    @GetMapping("/persons-by-names-start-text/{name}")
     public ResponseEntity<com.example.restApiMedicalInsurance.dtos.ApiResponse<PersonDto>> getPersonsByNamesStartText(
             @Parameter(description = "Enter text for search person with a such lastname, firstname or secondname", example = "ivan")
-            @RequestParam("text") String text) throws NoPersonsFoundException {
-        List<PersonDto> persons = personService.getPersonsByName(text);
+            @PathVariable("name") String name) throws NoPersonsFoundException {
+        List<PersonDto> persons = personService.getPersonsByName(name);
         if (persons.size() == 0) {
             throw new NoPersonsFoundException();
         }
